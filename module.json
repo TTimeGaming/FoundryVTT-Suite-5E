@@ -1,0 +1,45 @@
+{
+    "id": "suite-5e",
+    "title": "Suite 5E",
+    "description": "A FoundryVTT module providing an expanded suite of tools to further utilise the D&D 5E system.",
+    "version": "0.1.0",
+    "authors": [{
+        "name": "TTimeGaming",
+        "url": "https://github.com/TTimeGaming/",
+        "discord": "ttimegaming_"
+    }],
+    "library": true,
+    "compatibility": {
+        "minimum": 12,
+        "verified": "12.331",
+        "maximum": 12
+    },
+    "esmodules": [ "src/index.mjs" ],
+    "languages": [{
+        "lang": "en",
+        "name": "English",
+        "path": "lang/en.json"
+    }],
+    "packs": [{
+        "name": "examples",
+        "label": "Suite 5E Examples",
+        "path": "packs/examples",
+        "type": "Item",
+        "ownership": {
+            "PLAYER": "OBSERVER",
+            "ASSISTANT": "OWNER"
+        },
+        "system": "dnd5e"
+    }],
+    "relationships": {
+        "systems": [{
+            "id": "dnd5e",
+            "type": "system",
+            "compatibilty": {
+                "minimum": 4,
+                "verified": "4.0.0",
+                "maximum": 4
+            }
+        }]
+    }
+}
