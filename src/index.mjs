@@ -20,6 +20,12 @@ Hooks.on(`dnd5e.preRollSkill`, function(actor, rollData, skillKey) {
     prompts.onRollDialog(`skill`, actor, rollData.title, skillKey);
 });
 
+// Used by dnd5e v3.x.x
+Hooks.on(`dnd5e.preRollAttack`, function(roll, dialog, message) {
+    prompts.onRollDialog(`attack`, game.actors.find(x => x.id === message.data.speaker.actor), undefined);
+});
+
+// Used by dnd5e v4.x.x
 Hooks.on(`dnd5e.preRollAttackV2`, function(roll, dialog, message) {
     prompts.onRollDialog(`attack`, game.actors.find(x => x.id === message.data.speaker.actor), undefined);
 });

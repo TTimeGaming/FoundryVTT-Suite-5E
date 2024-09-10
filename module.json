@@ -2,7 +2,7 @@
     "id": "suite-5e",
     "title": "Suite 5E",
     "description": "A FoundryVTT module providing an expanded suite of tools to further utilise the D&D 5E system.",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "authors": [{
         "name": "TTimeGaming",
         "url": "https://github.com/TTimeGaming/",
@@ -36,7 +36,7 @@
             "id": "dnd5e",
             "type": "system",
             "compatibilty": {
-                "minimum": 4,
+                "minimum": 3,
                 "verified": "4.0.0",
                 "maximum": 4
             }
