@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 0.2.3
+- Updated module.json to include `manifest` and `download` keys
+
 ## Version 0.2.2
 - Amended all `suite-5e.custom-dialog` references to `suite-5e.dialog` for clarity and efficiency
 
