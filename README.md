@@ -21,7 +21,7 @@ These dialogs can be configured using Active Effect keys to display when an item
 
 ![A custom dialog displayed when adding an item to an actor's sheet](./assets/dialogs/custom-dialog.png "Custom Dialog")
 
-### Coming Soon: Fully-Fledged Wiki
+### Fully-Fledged Wiki
 This module has a fully-fledged [Wiki](https://github.com/TTimeGaming/FoundryVTT-Suite-5E/wiki) providing a full list of all available features and associated Active Effect keys, where necessary, to utilise the suite to its full potential. If you believe anything is missing from the wiki, please raise it on the [Issues](https://github.com/TTimeGaming/FoundryVTT-Suite-5E/issues) page so it can be resolved as quickly as possible.
 
 ## Known Issues

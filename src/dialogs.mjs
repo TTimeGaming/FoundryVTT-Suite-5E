@@ -23,7 +23,7 @@ export class Dialogs {
                     };
                     await item.parent.update(updates);
 
-                    Hooks.callAll(`suite-5e.custom-dialog.add`, id, item.parent, picker.getSelected());
+                    Hooks.callAll(`suite-5e.dialog.add`, id, item.parent, picker.getSelected());
                 },
                 async() => item.delete()
             );
@@ -44,7 +44,7 @@ export class Dialogs {
             updates[`flags.suite-5e.-=dialog.${item.id}`] = null;
             await item.parent.update(updates);
 
-            Hooks.callAll(`suite-5e.custom-dialog.rem`, flag.id, item.parent, flag.options);
+            Hooks.callAll(`suite-5e.dialog.rem`, flag.id, item.parent, flag.options);
         }
     }
 
@@ -75,8 +75,8 @@ export class Dialogs {
                             const removed = oldOptions.filter(x => !newOptions.includes(x));
                             const added = newOptions.filter(x => !oldOptions.includes(x));
 
-                            if (removed.length > 0) Hooks.callAll(`suite-5e.custom-dialog.rem`, id, item.parent, removed);
-                            if (added.length > 0) Hooks.callAll(`suite-5e.custom-dialog.add`, id, item.parent, added);
+                            if (removed.length > 0) Hooks.callAll(`suite-5e.dialog.rem`, id, item.parent, removed);
+                            if (added.length > 0) Hooks.callAll(`suite-5e.dialog.add`, id, item.parent, added);
                         },
                         async() => { /* make no changes */ }
                     );

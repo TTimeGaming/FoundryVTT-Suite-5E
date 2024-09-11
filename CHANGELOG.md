@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 0.2.2
+- Amended all `suite-5e.custom-dialog` references to `suite-5e.dialog` for clarity and efficiency
+
 ## Version 0.2.1
 - Added automatic hooks for Custom Dialogs using the `flags.suite-5e.dialog.id` field:
     - `suite-5e.armor` Used to automatically add and remove custom armor proficienxies

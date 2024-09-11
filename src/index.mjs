@@ -50,7 +50,7 @@ Hooks.on(`closeActiveEffectConfig`, function(app, html) {
     dialogs.onActiveEffect(app?.object?.changes ?? []);
 });
 
-Hooks.on(`suite-5e.custom-dialog.add`, async function(id, actor, options) {
+Hooks.on(`suite-5e.dialog.add`, async function(id, actor, options) {
     switch (id) {
         case `suite-5e.dialog`:
             ui.notifications.info(`Custom Dialog '${id}' added options: ${options.join(`, `)}`);
@@ -88,7 +88,7 @@ Hooks.on(`suite-5e.custom-dialog.add`, async function(id, actor, options) {
     }
 });
 
-Hooks.on(`suite-5e.custom-dialog.rem`, async function(id, actor, options) {
+Hooks.on(`suite-5e.dialog.rem`, async function(id, actor, options) {
     switch (id) {
         case `suite-5e.dialog`:
             ui.notifications.info(`Custom Dialog '${id}' removed options: ${options.join(`, `)}`);
