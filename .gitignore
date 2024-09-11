@@ -1,2 +1,5 @@
 # IDE
 .vscode/
+
+# Build Artifacts
+packs/
