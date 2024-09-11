@@ -1,9 +1,9 @@
-# FoundryVTT-Suite-5E
+# FoundryVTT Module: Suite 5E
 
 [![License: MIT](https://img.shields.io/badge/Software_License-MIT-blue.svg)](https://mit-license.org/)
 ![FoundryVTT Version](https://img.shields.io/badge/Foundry%20Version-12%2B%20%28Verified%2012.331%29-purple?logo=foundryvirtualtabletop&logoColor=white)
 ![D&D Version](https://img.shields.io/badge/D%26D%20Version-3.x.x%2B%20%28Verified%204.0.0%29-purple?logo=dungeonsanddragons&logoColor=white)
-![Latest Version](https://img.shields.io/badge/Latest%20Version-0.2.0-green)
+![Latest Version](https://img.shields.io/badge/Latest%20Version-0.2.1-green)
 
 This is a FoundryVTT module providing an expanded suite of tools to further utilise the official [D&D 5E system](https://foundryvtt.com/packages/dnd5e).
 
