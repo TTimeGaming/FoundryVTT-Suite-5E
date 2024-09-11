@@ -50,6 +50,14 @@ Hooks.on(`closeActiveEffectConfig`, function(app, html) {
     dialogs.onActiveEffect(app?.object?.changes ?? []);
 });
 
+Hooks.on(`suite-5e.custom-dialog.add`, function(id, options) {
+    if (id === `suite5e.dialog`) ui.notifications.info(`Custom Dialog '${id}' added options: ${options.join(`, `)}`);
+});
+
+Hooks.on(`suite-5e.custom-dialog.rem`, function(id, options) {
+    if (id === `suite5e.dialog`) ui.notifications.info(`Custom Dialog '${id}' removed options: ${options.join(`, `)}`);
+});
+
 $.fn.textWidth = function(text, font) {
     if (!$.fn.textWidth.fakeEl) $.fn.textWidth.fakeEl = $(`<span>`).hide().appendTo(document.body);
     $.fn.textWidth.fakeEl.text(text || this.val() || this.text()).css(`font`, font || this.css(`font`));
