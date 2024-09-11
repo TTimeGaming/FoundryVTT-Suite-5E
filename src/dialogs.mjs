@@ -23,7 +23,7 @@ export class Dialogs {
                     };
                     await item.parent.update(updates);
 
-                    Hooks.callAll(`suite-5e.custom-dialog.add`, id, picker.getSelected());
+                    Hooks.callAll(`suite-5e.custom-dialog.add`, id, item.parent, picker.getSelected());
                 },
                 async() => item.delete()
             );
@@ -44,7 +44,7 @@ export class Dialogs {
             updates[`flags.suite-5e.-=dialog.${item.id}`] = null;
             await item.parent.update(updates);
 
-            Hooks.callAll(`suite-5e.custom-dialog.rem`, flag.id, flag.options);
+            Hooks.callAll(`suite-5e.custom-dialog.rem`, flag.id, item.parent, flag.options);
         }
     }
 
@@ -75,8 +75,8 @@ export class Dialogs {
                             const removed = oldOptions.filter(x => !newOptions.includes(x));
                             const added = newOptions.filter(x => !oldOptions.includes(x));
 
-                            if (removed.length > 0) Hooks.callAll(`suite-5e.custom-dialog.rem`, id, removed);
-                            if (added.length > 0) Hooks.callAll(`suite-5e.custom-dialog.add`, id, added);
+                            if (removed.length > 0) Hooks.callAll(`suite-5e.custom-dialog.rem`, id, item.parent, removed);
+                            if (added.length > 0) Hooks.callAll(`suite-5e.custom-dialog.add`, id, item.parent, added);
                         },
                         async() => { /* make no changes */ }
                     );
@@ -192,9 +192,9 @@ class OptionPicker {
         'suite-5e.dialog.tools.other': `disg[Disguise Kit],forg[Forgery Kit],herb[Herbalism Kit],navg[Navigator's Tools],pois[Poisoner's Kit],thief[Thieves' Tools]`,
         'suite-5e.dialog.tools.all': `suite-5e.dialog.tools.artisan{artisan},suite-5e.dialog.tools.gaming{gaming},suite-5e.dialog.tools.musical{musical},suite-5e.dialog.tools.other{other}`,
 
-        'suite-5e.dialog.languages.standard': `common[Common]`,
-        'suite-5e.dialog.languages.exotic': `sylvan[Sylvan]`,
-        'suite-5e.dialog.languages.secret': `cant[Thieves' Cant]`,
+        'suite-5e.dialog.languages.standard': `common[Common],dwarvish[Dwarvish],elvish[Elvish],giant[Giant],gnomish[Gnomish],goblin[Goblin],halfling[Halfling],orc[Orc]`,
+        'suite-5e.dialog.languages.exotic': `aarakocra[Aarakocra],abyssal[Abyssal],celestial[Celestial],deep[Deep Speech],draconic[Draconic],gith[Gith],gnoll[Gnoll],infernal[Infernal],primordial[Primordial],aquan[Aquan]{primordial},auran[Auran]{primordial},ignan[Ignan]{primordial},terran[Terran]{primordial},sylvan[Sylvan],undercommon[Undercommon]`,
+        'suite-5e.dialog.languages.secret': `druidic[Druidic],cant[Thieves' Cant]`,
         'suite-5e.dialog.languages.all': `suite-5e.dialog.languages.standard{standard},suite-5e.dialog.languages.exotic{exotic},suite-5e.dialog.languages.secret{secret}`,
 
         'suite-5e.dialog.abilities': `str[Strength],dex[Dexterity],con[Constitution],int[Intelligence],wis[Wisdom],cha[Charisma],san[Sanity],hon[Honor]`,

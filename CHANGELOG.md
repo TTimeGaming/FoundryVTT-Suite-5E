@@ -1,5 +1,16 @@
 # Changelog
 
+## Version 0.2.1
+- Added automatic hooks for Custom Dialogs using the `flags.suite-5e.dialog.id` field:
+    - `suite-5e.armor` Used to automatically add and remove custom armor proficienxies
+    - `suite-5e.weapon` Used to automatically add and remove custom weapon proficienxies
+    - `suite-5e.tool` Used to automatically add and remove custom tool proficienxies
+    - `suite-5e.language` Used to automatically add and remove custom known languages
+    - `suite-5e.save` Used to automatically add and remove custom saving throw proficienxies
+    - `suite-5e.skill` Used to automatically add and remove custom skill proficienxies
+- `suite-5e.custom-dialog.add` and `suite-5e.custom-dialog.rem` hook events now receive the relevant actor as an argument
+- Fixed missing languages in the `suite-5e.dialog.languages` keys
+
 ## Version 0.2.0
 - Added support for Custom Dialogs to be configured via Active Effect keys
     - Dialogs can be configured with the following keys:

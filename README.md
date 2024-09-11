@@ -25,8 +25,10 @@ These dialogs can be configured using Active Effect keys to display when an item
 This module has a fully-fledged [Wiki](https://github.com/TTimeGaming/FoundryVTT-Suite-5E/wiki) providing a full list of all available features and associated Active Effect keys, where necessary, to utilise the suite to its full potential. If you believe anything is missing from the wiki, please raise it on the [Issues](https://github.com/TTimeGaming/FoundryVTT-Suite-5E/issues) page so it can be resolved as quickly as possible.
 
 ## Known Issues
-- **Unable to append a prompt to initiative rolls**  
+- **Unable to append a prompt to initiative rolls** (v0.1.0)  
 This issue is caused by the `dnd5e.preRollInitiative` hookEvent being fired **after** the roll dialog has been closed instead of before, as with all other rolls.
+- **Unable to remove tool proficiencies applied by Custom Dialog** (v0.2.1)   
+This issue has recently been highlighted and is being looked into.
 
 ---
 This module has been built using HTML5, CSS3 and Javascript.
