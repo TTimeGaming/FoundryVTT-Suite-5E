@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 0.2.4
+- Updated Roll Prompts to display both global and local prompts (e.g. when both `flags.suite-5e.prompts.check.all` and `flags.suite-5e.prompts.check.str` are set)
+
 ## Version 0.2.3
 - Updated module.json to include `manifest` and `download` keys
 
@@ -44,4 +47,3 @@
     - Skill Checks
     - Attack Rolls
 - Outlined required hooks for Custom Dialogs to be implemented in a future update
- 

@@ -58,7 +58,7 @@ export class Prompts {
         const height = parseInt($(html).css(`height`).replace(`px`, ``));
         
         const messageWidth = $(dialog).textWidth(this.#_messageToDisplay);
-        const lineCount = Math.ceil(messageWidth / width);
+        const lineCount = Math.ceil(messageWidth / width) + (this.#_messageToDisplay.split(`<br>`).length - 1);
 
 //        $(html).css(`top`, `${top - (10 * lineCount)}px`);
         $(html).css(`height`, `${height + 40 + (20 * (lineCount - 1))}px`);
@@ -77,21 +77,21 @@ export class Prompts {
      * @returns {boolean}
      */
     #obtainMessage(actor, title, globalStr, localStr = undefined) {
+        this.#_messageToDisplay = ``;
+
         const globalFlag = actor.getFlag(`suite-5e`, globalStr);
         if (globalFlag !== undefined) {
             this.#_cachedDialogTitle = title;
-            this.#_messageToDisplay = globalFlag;
-            return true;
+            this.#_messageToDisplay += globalFlag;
         }
 
         if (localStr === undefined) return;
         const localFlag = actor.getFlag(`suite-5e`, localStr);
         if (localFlag !== undefined) {
             this.#_cachedDialogTitle = title;
-            this.#_messageToDisplay = localFlag;
-            return true;
+            this.#_messageToDisplay += `${this.#_messageToDisplay !== `` ? `<br>` : ``}${localFlag}`;
         }
 
-        return false;
+        return this.#_messageToDisplay !== ``;
     }
 }
