@@ -25,7 +25,6 @@ These dialogs can be configured using Active Effect keys to display when an item
 This module has a fully-fledged [Wiki](https://github.com/TTimeGaming/FoundryVTT-Suite-5E/wiki) providing a full list of all available features and associated Active Effect keys, where necessary, to utilise the suite to its full potential. If you believe anything is missing from the wiki, please raise it on the [Issues](https://github.com/TTimeGaming/FoundryVTT-Suite-5E/issues) page so it can be resolved as quickly as possible.
 
 ### Planned Features
-- Roll Prompts to identify the source of the prompt (e.g. `This is an <b>example</b> prompt. (<i>Example Feature</i>)`)
 - Grants to be implemented, and fully compatible with Custom Dialogs, to allow player's to choose items (similar to the D&D 5E Choose Items advancement).
 
 ## Known Issues

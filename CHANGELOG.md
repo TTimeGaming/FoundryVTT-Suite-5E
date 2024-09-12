@@ -6,6 +6,7 @@
     - **This is a breaking change, as it relies on a hook called when an Actor is created, and all Roll Prompt change modes should be updated from `Override` to `Add`**  
     ***Update at your own discretion***
 - Roll dialog windows now size appropriately to fit all prompts correctly
+- Roll Prompts indicate their source in the description (e.g. `This is an <b>example</b> prompt <i>(Your Feature)</i>`)
 
 ## Version 0.2.4
 - Updated Roll Prompts to display both global and local prompts (e.g. when both `flags.suite-5e.prompts.check.all` and `flags.suite-5e.prompts.check.str` are set)
