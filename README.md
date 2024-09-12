@@ -26,8 +26,6 @@ This module has a fully-fledged [Wiki](https://github.com/TTimeGaming/FoundryVTT
 
 ### Planned Features
 - Roll Prompts to identify the source of the prompt (e.g. `This is an <b>example</b> prompt. (<i>Example Feature</i>)`)
-- Roll Prompt values to be converted from Strings to Sets to allow multiple prompts per roll  
-***(This will be a breaking change as Active Effect Change Modes will need to be amended from `Override` to `Add`)***
 - Grants to be implemented, and fully compatible with Custom Dialogs, to allow player's to choose items (similar to the D&D 5E Choose Items advancement).
 
 ## Known Issues

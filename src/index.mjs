@@ -34,6 +34,10 @@ Hooks.on(`renderDialog`, function(application, html, content) {
     prompts.onRenderDialog(application.data.title, html);
 });
 
+Hooks.on(`createActor`, async function(actor, options, userId) {
+    await prompts.prepareActorFlags(actor);
+});
+
 Hooks.on(`createItem`, function(item, options, userId) {
     dialogs.onItemAdded(item, options);
 });

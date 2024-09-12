@@ -1,6 +1,25 @@
 export class Prompts {
     #_cachedDialogTitle = ``;
     #_messageToDisplay = ``;
+    #_promptTypes = [];
+    #_actor = null;
+
+    async prepareActorFlags(actor) {
+        const abilities = [ `all`, `str`, `dex`, `con`, `int`, `wis`, `cha`, `san`, `hon` ];
+        const skills = [ `all`, `acr`, `ani`, `arc`, `ath`, `dec`, `his`, `ins`, `inv`, `itm`, `med`, `nat`, `per`, `prc`, `prf`, `rel`, `slt`, `ste`, `sur` ];
+
+        const updates = {};
+        for (const ability of abilities) {
+            updates[`flags.suite-5e.prompts.check.${ability}`] = [];
+            updates[`flags.suite-5e.prompts.save.${ability}`] = [];
+        }
+        for (const skill of skills) {
+            updates[`flags.suite-5e.prompts.skill.${skill}`] = [];
+        }
+        updates[`flags.suite-5e.prompts.concentration`] = [];
+        updates[`flags.suite-5e.prompts.attack`] = [];
+        await actor.update(updates);
+    }
 
     /**
      * 
@@ -10,6 +29,8 @@ export class Prompts {
      * @param  {...any} options Any relevant arguments
      */
     onRollDialog(hook, actor, title, ...options) {
+        this.#_actor = actor;
+
         switch (hook) {
             case `check`: {
                 const abilityKey = options[0];
@@ -46,25 +67,58 @@ export class Prompts {
         if (title !== this.#_cachedDialogTitle || this.#_messageToDisplay === ``) {
             this.#_cachedDialogTitle = ``;
             this.#_messageToDisplay = ``;
+            this.#_promptTypes = [];
+            this.#_actor = null;
             return;
         }
 
+        const originalParts = this.#_messageToDisplay.split(`<br>`);
+        const messageParts = [];
+        for (var i = 0; i < originalParts.length; i++) {
+            if (originalParts[i] === ``) continue;
+
+            var matched = false;
+
+            for (const item of this.#_actor.items) {
+                for (const effect of item.effects) {
+                    for (const change of effect.changes) {
+                        if (!this.#_promptTypes.includes(change.key)) continue;
+                        if (originalParts[i] !== change.value) continue;
+
+                        messageParts.push(`${originalParts[i]} <i>(${item.name})</i>`);
+                        matched = true;
+                        break;
+                    }
+                    if (matched) break;
+                }
+                if (matched) break;
+            }
+
+            if (!matched) messageParts.push(`${originalParts[i]} <i>(Custom)</i>`);
+        }
+
+        const message = messageParts.join(`<br>`);
+
         const dialog = $(html).find(`div.dialog-content`).children(`:first`);
         dialog.append($(`<div class="form-group"><span>&nbsp;</span></div>`));
-        dialog.append($(`<div class="form-group" style="color:var(--color-text-dark-secondary);"><span>${this.#_messageToDisplay}</span></div>`));
+        dialog.append($(`<div class="form-group" style="color:var(--color-text-dark-secondary);"><span>${message}</span></div>`));
         
         const top = parseInt($(html).css(`top`).replace(`px`, ``));
         const width = parseInt($(html).css(`width`).replace(`px`, ``));
         const height = parseInt($(html).css(`height`).replace(`px`, ``));
-        
-        const messageWidth = $(dialog).textWidth(this.#_messageToDisplay);
-        const lineCount = Math.ceil(messageWidth / width) + (this.#_messageToDisplay.split(`<br>`).length - 1);
 
-//        $(html).css(`top`, `${top - (10 * lineCount)}px`);
-        $(html).css(`height`, `${height + 40 + (20 * (lineCount - 1))}px`);
+        var lineCount = 0;
+        for (const msg of messageParts) {
+            lineCount += Math.ceil($(dialog).textWidth(msg) / width);
+        }
+
+        $(html).css(`top`, `${top - 11 - (lineCount * 8.5)}px`);
+        $(html).css(`height`, `${height + 22 + (lineCount * 17)}px`);
 
         this.#_cachedDialogTitle = ``;
         this.#_messageToDisplay = ``;
+        this.#_promptTypes = [];
+        this.#_actor = null;
     }
 
     /**
@@ -78,18 +132,24 @@ export class Prompts {
      */
     #obtainMessage(actor, title, globalStr, localStr = undefined) {
         this.#_messageToDisplay = ``;
+        this.#_promptTypes = [];
 
-        const globalFlag = actor.getFlag(`suite-5e`, globalStr);
-        if (globalFlag !== undefined) {
-            this.#_cachedDialogTitle = title;
-            this.#_messageToDisplay += globalFlag;
+        if (globalStr !== undefined) {
+            this.#_promptTypes.push(`flags.suite-5e.${globalStr}`);
+            const globalFlag = actor.getFlag(`suite-5e`, globalStr);
+            if (globalFlag !== undefined) {
+                this.#_cachedDialogTitle = title;
+                this.#_messageToDisplay += typeof globalFlag === `string` ? globalFlag : globalFlag.length > 0 ? globalFlag.join(`<br>`) : ``;
+            }
         }
 
-        if (localStr === undefined) return;
-        const localFlag = actor.getFlag(`suite-5e`, localStr);
-        if (localFlag !== undefined) {
-            this.#_cachedDialogTitle = title;
-            this.#_messageToDisplay += `${this.#_messageToDisplay !== `` ? `<br>` : ``}${localFlag}`;
+        if (localStr !== undefined) {
+            this.#_promptTypes.push(`flags.suite-5e.${localStr}`);
+            const localFlag = actor.getFlag(`suite-5e`, localStr);
+            if (localFlag !== undefined) {
+                this.#_cachedDialogTitle = title;
+                this.#_messageToDisplay += `${this.#_messageToDisplay !== `` ? `<br>` : ``}${typeof localFlag === `string` ? localFlag : localFlag.length > 0 ? localFlag.join(`<br>`) : ``}`;
+            }
         }
 
         return this.#_messageToDisplay !== ``;

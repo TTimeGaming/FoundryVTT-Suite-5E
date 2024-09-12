@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 0.3.0
+**Breaking Changes: Version 0.3.0 is no longer compatible with previous versions. Apologies.**
+- Updated support for Roll Prompts to display prompts from multiple sources at the same time
+    - **This is a breaking change, as it relies on a hook called when an Actor is created, and all Roll Prompt change modes should be updated from `Override` to `Add`**  
+    ***Update at your own discretion***
+- Roll dialog windows now size appropriately to fit all prompts correctly
+
 ## Version 0.2.4
 - Updated Roll Prompts to display both global and local prompts (e.g. when both `flags.suite-5e.prompts.check.all` and `flags.suite-5e.prompts.check.str` are set)
 
