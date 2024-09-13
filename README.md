@@ -17,7 +17,7 @@ These prompts allow users to specify prompts in the roll dialog windows using Ac
 ![A roll prompt added to the ability check roll dialog window](./assets/prompts/ability-check.png "Ability Check Roll Prompt")
 
 ### Custom Dialogs
-These dialogs can be configured using Active Effect keys to display when an item is added to an actor's sheet and can be used in a variety of ways, but functionality will primarily need to be implemented via a module listening to the `suite-5e` hooks. Implementations are incredibly versatile, but can allow for items to provide an actor with an additional language, skill choice, proficiency with an armor or weapon, etc. The chosen option can also be amended using the "Amend Option" context menu item.
+These dialogs can be configured using Active Effect keys to display when an item is added to an actor's sheet and can be used in a variety of ways, but functionality will primarily need to be implemented via a module listening to the `suite-5e` hooks. Implementations are incredibly versatile, but can allow for items to provide an actor with an additional language, skill choice, proficiency with an armor or weapon, etc. The Grants feature allows for additional objects to be provided to the actor based upon the chosen option(s). The chosen option(s) can also be amended using the "Amend Option" context menu item.
 
 ![A custom dialog displayed when adding an item to an actor's sheet](./assets/dialogs/custom-dialog.png "Custom Dialog")
 
@@ -25,7 +25,7 @@ These dialogs can be configured using Active Effect keys to display when an item
 This module has a fully-fledged [Wiki](https://github.com/TTimeGaming/FoundryVTT-Suite-5E/wiki) providing a full list of all available features and associated Active Effect keys, where necessary, to utilise the suite to its full potential. If you believe anything is missing from the wiki, please raise it on the [Issues](https://github.com/TTimeGaming/FoundryVTT-Suite-5E/issues) page so it can be resolved as quickly as possible.
 
 ### Planned Features
-- Grants to be implemented, and fully compatible with Custom Dialogs, to allow player's to choose items (similar to the D&D 5E Choose Items advancement).
+- 
 
 ## Known Issues
 - **Unable to append a prompt to initiative rolls** (v0.1.0)  

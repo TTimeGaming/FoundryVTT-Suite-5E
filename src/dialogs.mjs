@@ -1,11 +1,89 @@
 export class Dialogs {
     #_requiredParams = [ `flags.suite-5e.dialog.id`, `flags.suite-5e.dialog.options` ];
-    #_optionalParams = [ `flags.suite-5e.dialog.title`, `flags.suite-5e.dialog.message`, `flags.suite-5e.dialog.count` ];
-    #_optionalValues = {
+    #_optionalParams = {
         'flags.suite-5e.dialog.title': `Custom Dialog`,
         'flags.suite-5e.dialog.message': ``,
         'flags.suite-5e.dialog.count': 1
     };
+    #_grantParams = {
+        'flags.suite-5e.dialog.grants': ``
+    };
+
+    async onDialogAdd(id, actor, options) {
+        switch (id) {
+            case `suite-5e.dialog`:
+                ui.notifications.info(`Custom Dialog '${id}' added options: ${options.join(`, `)}`);
+                break;
+            case `suite-5e.armor`:
+                const armors = actor.system.traits.armorProf.value;
+                options.forEach(x => armors.add(x));
+                await actor.update({ 'system.traits.armorProf.value': armors });
+                break;
+            case `suite-5e.weapon`:
+                const weapons = actor.system.traits.weaponProf.value;
+                options.forEach(x => weapons.add(x));
+                await actor.update({ 'system.traits.armorProf.value': weapons });
+                break;
+            case `suite-5e.tool`:
+                const tools = actor.system.tools;
+                options.forEach(x => tools[x] = { value: 1 });
+                await actor.update({ 'system.tools': tools });
+                break;
+            case `suite-5e.language`:
+                const languages = actor.system.traits.languages.value;
+                options.forEach(x => languages.add(x));
+                await actor.update({ 'system.traits.languages.value': languages });
+                break;
+            case `suite-5e.save`:
+                const saveUpdates = {};
+                options.forEach(x => saveUpdates[`system.abilities.${x}.proficient`] = 1);
+                await actor.update(saveUpdates);
+                break;
+            case `suite-5e.skill`:
+                const skillUpdates = {};
+                options.forEach(x => skillUpdates[`system.skills.${x}.value`] = 1);
+                await actor.update(skillUpdates);
+                break;
+        }
+    }
+
+    async onDialogRem(id, actor, options) {
+        switch (id) {
+            case `suite-5e.dialog`:
+                ui.notifications.info(`Custom Dialog '${id}' removed options: ${options.join(`, `)}`);
+                break;
+            case `suite-5e.armor`:
+                const armors = actor.system.traits.armorProf.value;
+                options.forEach(x => armors.delete(x));
+                await actor.update({ 'system.traits.armorProf.value': armors });
+                break;
+            case `suite-5e.weapon`:
+                const weapons = actor.system.traits.weaponProf.value;
+                options.forEach(x => weapons.delete(x));
+                await actor.update({ 'system.traits.armorProf.value': weapons });
+                break;
+            case `suite-5e.tool`:
+                const filteredTools = Object.keys(actor.system.tools).filter(key => !options.includes(key));
+                const tools = filteredTools.length > 0 ? filteredTools.reduce((obj, key) => { obj[key] = actor.system.tools[key]; return obj; }) : {};
+                await actor.update({ 'system.tools': tools });
+                break;
+            case `suite-5e.language`:
+                const languages = actor.system.traits.languages.value;
+                options.forEach(x => languages.delete(x));
+                await actor.update({ 'system.traits.languages.value': languages });
+                break;
+            case `suite-5e.save`:
+                const saveUpdates = {};
+                options.forEach(x => saveUpdates[`system.abilities.${x}.proficient`] = 0);
+                await actor.update(saveUpdates);
+                break;
+            case `suite-5e.skill`:
+                const skillUpdates = {};
+                options.forEach(x => skillUpdates[`system.skills.${x}.value`] = 0);
+                await actor.update(skillUpdates);
+                break;
+        }
+    }
 
     onItemAdded(item, options) {
         if (item.parent === undefined || item.parent == null) return;
@@ -15,15 +93,33 @@ export class Dialogs {
             if (!isValid) continue;
 
             this.#openDialog(effect.changes, [],
-                async(picker, id) => {
+                async(picker, id, grants) => {
+                    const selected = picker.getSelected();
+
+                    const added = {};
+                    for (const grant of grants.split(`,`)) {
+                        const key = (/^[^\[]*/g.exec((/^[^\{]*/g.exec(grant) ?? [ grant ])[0]) ?? [ grant ])[0];
+                        const label = ((/\[([^}]+)\]/g.exec(grant) ?? [ grant ])[0].replace(`[`, ``).replace(`]`, ``));
+
+                        if (!selected.includes(label)) continue;
+                        if (added[label] === undefined) added[label] = {};
+
+                        const document = await fromUuid(key);
+                        if (document === undefined) continue;
+                        
+                        const copies = await item.parent.createEmbeddedDocuments("Item", [ document.toObject() ]);
+                        copies.forEach(x => added[label][x.id] = document.id);
+                    }
+                    
                     const updates = {};
                     updates[`flags.suite-5e.dialog.${item.id}`] = {
                         id: id,
-                        options: picker.getSelected()
+                        options: selected,
+                        grants: added
                     };
                     await item.parent.update(updates);
 
-                    Hooks.callAll(`suite-5e.dialog.add`, id, item.parent, picker.getSelected());
+                    Hooks.callAll(`suite-5e.dialog.add`, id, item.parent, selected);
                 },
                 async() => item.delete()
             );
@@ -39,6 +135,15 @@ export class Dialogs {
 
             const flag = item.parent.getFlag(`suite-5e`, `dialog.${item.id}`);
             if (flag === undefined) continue;
+
+            for (const option of Object.keys(flag.grants)) {
+                for (const grant of Object.keys(flag.grants[option])) {
+                    for (const document of item.parent.items) {
+                        if (document.id !== grant) continue;
+                        document.delete(); break;
+                    }
+                }
+            }
 
             const updates = {};
             updates[`flags.suite-5e.-=dialog.${item.id}`] = null;
@@ -59,24 +164,61 @@ export class Dialogs {
                 group: `state`,
                 condition: () => item.isOwner,
                 callback: (li) => {
-                    const oldOptions = item.parent.getFlag(`suite-5e`, `dialog.${item.id}`)?.options ?? [];
-
+                    const old = item.parent.getFlag(`suite-5e`, `dialog.${item.id}`);
+                    const oldOptions = old?.options ?? [];
+                    const oldGrants = old?.grants ?? [];
+                    
                     this.#openDialog(effect.changes, oldOptions,
-                        async(picker, id) => {
-                            const newOptions = picker.getSelected();
+                        async(picker, id, grants) => {
+                            const selected = picker.getSelected();
+
+                            const removedOptions = oldOptions.filter(x => !selected.includes(x));
+                            const addedOptions = selected.filter(x => !oldOptions.includes(x));
+
+                            if (removedOptions.length > 0) {
+                                Hooks.callAll(`suite-5e.dialog.rem`, id, item.parent, removedOptions);
+
+                                for (const option of removedOptions) {
+                                    for (const grant of Object.keys(oldGrants[option] ?? [])) {
+                                        for (const document of item.parent.items) {
+                                            if (document.id !== grant) continue;
+                                            document.delete(); break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            const added = {};
+                            for (const option of selected) {
+                                if (addedOptions.includes(option)) continue;
+                                added[option] = oldGrants[option];
+                            }
+
+                            if (addedOptions.length > 0) {
+                                Hooks.callAll(`suite-5e.dialog.add`, id, item.parent, addedOptions);
+
+                                for (const grant of grants.split(`,`)) {
+                                    const key = (/^[^\[]*/g.exec((/^[^\{]*/g.exec(grant) ?? [ grant ])[0]) ?? [ grant ])[0];
+                                    const label = ((/\[([^}]+)\]/g.exec(grant) ?? [ grant ])[0].replace(`[`, ``).replace(`]`, ``));
+
+                                    if (!addedOptions.includes(label)) continue;
+                                    added[label] = {};
+
+                                    const document = await fromUuid(key);
+                                    if (document === undefined) continue;
+                                    
+                                    const copies = await item.parent.createEmbeddedDocuments("Item", [ document.toObject() ]);
+                                    copies.forEach(x => added[label][x.id] = document.id);
+                                }
+                            }
 
                             const updates = {};
                             updates[`flags.suite-5e.dialog.${item.id}`] = {
                                 id: id,
-                                options: newOptions
+                                options: selected,
+                                grants: added
                             };
                             await item.parent.update(updates);
-
-                            const removed = oldOptions.filter(x => !newOptions.includes(x));
-                            const added = newOptions.filter(x => !oldOptions.includes(x));
-
-                            if (removed.length > 0) Hooks.callAll(`suite-5e.dialog.rem`, id, item.parent, removed);
-                            if (added.length > 0) Hooks.callAll(`suite-5e.dialog.add`, id, item.parent, added);
                         },
                         async() => { /* make no changes */ }
                     );
@@ -113,7 +255,7 @@ export class Dialogs {
                     await failureCallback();
                     return;
                 }
-                await successCallback(picker, keys[`flags.suite-5e.dialog.id`]);
+                await successCallback(picker, keys[`flags.suite-5e.dialog.id`], keys[`flags.suite-5e.dialog.grants`]);
             }
         });
         dialog.render(true);
@@ -128,7 +270,7 @@ export class Dialogs {
             if (!keys.includes(param)) continue;
             isDialog = true; break;
         }
-        for (const param of this.#_optionalParams) {
+        for (const param of Object.keys(this.#_optionalParams)) {
             if (!keys.includes(param)) continue;
             isDialog = true; break;
         }
@@ -146,7 +288,7 @@ export class Dialogs {
         }
 
         missingParams = [];
-        for (const param of this.#_optionalParams) {
+        for (const param of Object.keys(this.#_optionalParams)) {
             if (keys.includes(param)) continue;
             missingParams.push(param);
         }
@@ -159,13 +301,18 @@ export class Dialogs {
     #constructKeys(entries) {
         const keys = {};
         for (const entry of entries) {
-            if (!this.#_requiredParams.includes(entry.key) && !this.#_optionalParams.includes(entry.key)) continue;
+            if (!this.#_requiredParams.includes(entry.key) && !Object.keys(this.#_optionalParams).includes(entry.key) && !Object.keys(this.#_grantParams).includes(entry.key)) continue;
             keys[entry.key] = entry.value;
         }
 
-        for (const optional of this.#_optionalParams) {
+        for (const optional of Object.keys(this.#_optionalParams)) {
             if (keys[optional] !== undefined) continue;
-            keys[optional] = this.#_optionalValues[optional];
+            keys[optional] = this.#_optionalParams[optional];
+        }
+
+        for (const grant of Object.keys(this.#_grantParams)) {
+            if (keys[grant] !== undefined) continue;
+            keys[grant] = this.#_grantParams[grant];
         }
 
         return keys;

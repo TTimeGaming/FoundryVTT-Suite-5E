@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 0.3.1
+- New Grants feature added to Custom Dialogs
+    - Added new `flags.suite-5e.dialog.grants` key to allow for dialogs to give actors additional items based on the outcome of the dialog
+    - Multiple items can be given for one choice by using the same `[choiceID]`, as explained further in the Wiki
+
 ## Version 0.3.0
 **Breaking Changes: Version 0.3.0 is no longer compatible with previous versions. Apologies.**
 - Updated support for Roll Prompts to display prompts from multiple sources at the same time
