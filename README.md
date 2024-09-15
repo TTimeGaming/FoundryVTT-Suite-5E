@@ -11,10 +11,10 @@ This is a FoundryVTT module providing an expanded suite of tools to further util
 
 ## Major Features
 
-### Roll Prompts
-These prompts allow users to specify prompts in the roll dialog windows using Active Effect keys for given hooks, such as ability checks, saving throws, skill checks, and more. These can be used to remind players of conditions that may change the roll mode (e.g. advantage on saving throws against poison), damage dice (e.g. + 1d8 if the target is undead) that cannot be automated using the tools provided by the D&D system.
+### Dialog Prompts
+These prompts allow users to specify prompts in various dialog windows using Active Effect keys for given hooks, such as ability checks, saving throws, skill checks, and more. These can be used to remind players of conditions that may change the roll mode (e.g. advantage on saving throws against poison), damage dice (e.g. + 1d8 if the target is undead) that cannot be automated using the tools provided by the D&D system.
 
-![A roll prompt added to the ability check roll dialog window](./assets/prompts/ability-check.png "Ability Check Roll Prompt")
+![A dialog prompt added to the ability check roll dialog window](./assets/prompts/ability-check.png "Ability Check Roll Prompt")
 
 ### Custom Dialogs
 These dialogs can be configured using Active Effect keys to display when an item is added to an actor's sheet and can be used in a variety of ways, but functionality will primarily need to be implemented via a module listening to the `suite-5e` hooks. Implementations are incredibly versatile, but can allow for items to provide an actor with an additional language, skill choice, proficiency with an armor or weapon, etc. The Grants feature allows for additional objects to be provided to the actor based upon the chosen option(s). The chosen option(s) can also be amended using the "Amend Option" context menu item.
@@ -25,7 +25,9 @@ These dialogs can be configured using Active Effect keys to display when an item
 This module has a fully-fledged [Wiki](https://github.com/TTimeGaming/FoundryVTT-Suite-5E/wiki) providing a full list of all available features and associated Active Effect keys, where necessary, to utilise the suite to its full potential. If you believe anything is missing from the wiki, please raise it on the [Issues](https://github.com/TTimeGaming/FoundryVTT-Suite-5E/issues) page so it can be resolved as quickly as possible.
 
 ### Planned Features
-- 
+- Expanded Grants feature to allow choices from defined locations (such as Wizard Cantrip list, Warlock Spell list or Feats)
+- Additional Conditions to handle certain game states (such as Bardic Inspiration)
+- Expanded Dialogs to include proficiency and expertise, and filter lists to not include already obtained items
 
 ## Known Issues
 - **Unable to append a prompt to initiative rolls** (v0.1.0)  

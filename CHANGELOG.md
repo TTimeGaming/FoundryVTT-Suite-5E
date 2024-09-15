@@ -1,5 +1,14 @@
 # Changelog
 
+## Version 0.3.2
+- Renamed references from Roll Prompts to Dialog Prompts to better identify feature behavior
+- Added support for roll data to be parsed directly via prompts
+- Expanded support for additional Dialog Prompts:
+    - Damage rolls
+    - Rest dialogs
+- Added support for wider range of attack options for specific scenarios
+- Planned to drop support for D&D v3.x.x with release of official 4.x.x verisoning from Version 0.4.0
+
 ## Version 0.3.1
 - New Grants feature added to Custom Dialogs
     - Added new `flags.suite-5e.dialog.grants` key to allow for dialogs to give actors additional items based on the outcome of the dialog

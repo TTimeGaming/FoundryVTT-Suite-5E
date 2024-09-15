@@ -20,14 +20,30 @@ Hooks.on(`dnd5e.preRollSkill`, function(actor, rollData, skillKey) {
     prompts.onRollDialog(`skill`, actor, rollData.title, skillKey);
 });
 
-// Used by dnd5e v3.x.x
+// v3.x.x
 Hooks.on(`dnd5e.preRollAttack`, function(roll, dialog, message) {
-    prompts.onRollDialog(`attack`, game.actors.find(x => x.id === message.data.speaker.actor), undefined);
+    prompts.onRollDialog(`attack`, game.actors.find(x => x.id === message.data.speaker.actor), undefined, message.data.flags.dnd5e.item?.type ?? `none`);
 });
 
-// Used by dnd5e v4.x.x
+Hooks.on(`dnd5e.preRollDamage`, function(roll, dialog, message) {
+    prompts.onRollDialog(`damage`, game.actors.find(x => x.id === message.data.speaker.actor), undefined, message.data.flags.dnd5e.item?.type ?? `none`);
+});
+
+// v4.x.x
 Hooks.on(`dnd5e.preRollAttackV2`, function(roll, dialog, message) {
-    prompts.onRollDialog(`attack`, game.actors.find(x => x.id === message.data.speaker.actor), undefined);
+    prompts.onRollDialog(`attack`, game.actors.find(x => x.id === message.data.speaker.actor), undefined, message.data.flags.dnd5e.item?.type ?? `none`);
+});
+
+Hooks.on(`dnd5e.preRollDamageV2`, function(roll, dialog, message) {
+    prompts.onRollDialog(`damage`, game.actors.find(x => x.id === message.data.speaker.actor), undefined, message.data.flags.dnd5e.item?.type ?? `none`);
+});
+
+Hooks.on(`dnd5e.preShortRest`, function(actor, rest) {
+    prompts.onRollDialog(`rest`, actor, `Short Rest: ${actor.name}`, rest.type);
+});
+
+Hooks.on(`dnd5e.preLongRest`, function(actor, rest) {
+    prompts.onRollDialog(`rest`, actor, `Long Rest: ${actor.name}`, rest.type);
 });
 
 Hooks.on(`renderDialog`, function(application, html, content) {
@@ -36,6 +52,10 @@ Hooks.on(`renderDialog`, function(application, html, content) {
 
 Hooks.on(`createActor`, async function(actor, options, userId) {
     await prompts.prepareActorFlags(actor);
+});
+
+Hooks.on(`renderActorSheet5e`, async function(app, html, options) {
+    await prompts.prepareActorFlags(options.actor);
 });
 
 Hooks.on(`createItem`, function(item, options, userId) {

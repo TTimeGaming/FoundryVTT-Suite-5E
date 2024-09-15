@@ -7,17 +7,22 @@ export class Prompts {
     async prepareActorFlags(actor) {
         const abilities = [ `all`, `str`, `dex`, `con`, `int`, `wis`, `cha`, `san`, `hon` ];
         const skills = [ `all`, `acr`, `ani`, `arc`, `ath`, `dec`, `his`, `ins`, `inv`, `itm`, `med`, `nat`, `per`, `prc`, `prf`, `rel`, `slt`, `ste`, `sur` ];
+        const rests = [ `all`, `short`, `long` ];
 
         const updates = {};
         for (const ability of abilities) {
-            updates[`flags.suite-5e.prompts.check.${ability}`] = [];
-            updates[`flags.suite-5e.prompts.save.${ability}`] = [];
+            if (actor.getFlag(`suite-5e`, `prompts.check.${ability}`) == undefined) updates[`flags.suite-5e.prompts.check.${ability}`] = [];
+            if (actor.getFlag(`suite-5e`, `prompts.save.${ability}`) == undefined) updates[`flags.suite-5e.prompts.save.${ability}`] = [];
         }
         for (const skill of skills) {
-            updates[`flags.suite-5e.prompts.skill.${skill}`] = [];
+            if (actor.getFlag(`suite-5e`, `prompts.skill.${skill}`) == undefined) updates[`flags.suite-5e.prompts.skill.${skill}`] = [];
         }
-        updates[`flags.suite-5e.prompts.concentration`] = [];
-        updates[`flags.suite-5e.prompts.attack`] = [];
+        for (const rest of rests) {
+            if (actor.getFlag(`suite-5e`, `prompts.rest.${rest}`) == undefined) updates[`flags.suite-5e.prompts.rest.${rest}`] = [];
+        }
+        if (actor.getFlag(`suite-5e`, `prompts.concentration`) == undefined) updates[`flags.suite-5e.prompts.concentration`] = [];
+        if (actor.getFlag(`suite-5e`, `prompts.attack`) == undefined) updates[`flags.suite-5e.prompts.attack`] = [];
+        if (actor.getFlag(`suite-5e`, `prompts.damage`) === undefined) updates[`flags.suite-5e.prompts.damage`] = [];
         await actor.update(updates);
     }
 
@@ -52,9 +57,21 @@ export class Prompts {
                 break;
             }
             case `attack`: {
-                this.#obtainMessage(actor, title, `prompts.attack`);
+                const itemType = options[0];
+                const source = [ `consumable`, `container`, `equipment`, `loot`, `tool`, `weapon` ].includes(itemType) ? `inventory` : [ `feat` ].includes(itemType) ? `feature` : [ `spell` ].includes(itemType) ? `spell` : `none`;
+                this.#obtainMessage(actor, title, `prompts.attack.all`, `prompts.attack.${source}`);
                 break;
             }
+            case `damage`: {
+                const itemType = options[0];
+                const source = [ `consumable`, `container`, `equipment`, `loot`, `tool`, `weapon` ].includes(itemType) ? `inventory` : [ `feat` ].includes(itemType) ? `feature` : [ `spell` ].includes(itemType) ? `spell` : `none`;
+                this.#obtainMessage(actor, title, `prompts.damage.all`, `prompts.damage.${source}`);
+                break;
+            }
+            case `rest`: {
+                const restType = options[0];
+                this.#obtainMessage(actor, title, `prompts.rest.all`, `prompts.rest.${restType}`);
+            };
         }
     }
 
@@ -72,10 +89,12 @@ export class Prompts {
             return;
         }
 
+        const rollData = this.#_actor.getRollData();
+        
         const originalParts = this.#_messageToDisplay.split(`<br>`);
         const messageParts = [];
-        for (var i = 0; i < originalParts.length; i++) {
-            if (originalParts[i] === ``) continue;
+        for (const original of originalParts) {
+            if (original === ``) continue;
 
             var matched = false;
 
@@ -83,9 +102,24 @@ export class Prompts {
                 for (const effect of item.effects) {
                     for (const change of effect.changes) {
                         if (!this.#_promptTypes.includes(change.key)) continue;
-                        if (originalParts[i] !== change.value) continue;
+                        if (original !== change.value) continue;
 
-                        messageParts.push(`${originalParts[i]} <i>(${item.name})</i>`);
+                        var entry = original;
+                        const matches = original.match(/@([^\s]+)/g);
+                        for (const match of (matches ?? [])) {
+                            const key = match.replace(/<\/[^>]+(>|$)/g, ``);
+                            
+                            var obj = rollData;
+                            for (const part of key.replace(`@`, ``).split(`.`)) {
+                                obj = obj[part];
+                                if (obj === undefined) continue;
+                            }
+
+                            if (obj === undefined) continue;
+                            entry = entry.replace(key, obj);
+                        }
+
+                        messageParts.push(`${entry} <i>(${item.name})</i>`);
                         matched = true;
                         break;
                     }
@@ -94,14 +128,20 @@ export class Prompts {
                 if (matched) break;
             }
 
-            if (!matched) messageParts.push(`${originalParts[i]} <i>(Custom)</i>`);
+            if (!matched) messageParts.push(`${original} <i>(Custom)</i>`);
         }
 
         const message = messageParts.join(`<br>`);
 
-        const dialog = $(html).find(`div.dialog-content`).children(`:first`);
-        dialog.append($(`<div class="form-group"><span>&nbsp;</span></div>`));
-        dialog.append($(`<div class="form-group" style="color:var(--color-text-dark-secondary);"><span>${message}</span></div>`));
+        const dialog = $(html).find(`section.window-content`).find(`form`);
+        const buttons = dialog.find(`.dialog-buttons`);
+        const appendFunction = (content) => {
+            if (buttons.length > 0) content.insertBefore(buttons);
+            else dialog.append(content);
+        };
+
+        appendFunction($(`<div class="form-group"><span>&nbsp;</span></div>`));
+        appendFunction($(`<div class="form-group" style="color:var(--color-text-dark-secondary);"><span>${message}</span></div>`));
         
         const top = parseInt($(html).css(`top`).replace(`px`, ``));
         const width = parseInt($(html).css(`width`).replace(`px`, ``));
