@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 0.3.3
+- Fixed bug with weapon proficiency dialog storing incorrectly as armor proficiency
+
 ## Version 0.3.2
 - Renamed references from Roll Prompts to Dialog Prompts to better identify feature behavior
 - Added support for roll data to be parsed directly via prompts

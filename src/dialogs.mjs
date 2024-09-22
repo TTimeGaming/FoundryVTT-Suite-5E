@@ -22,7 +22,7 @@ export class Dialogs {
             case `suite-5e.weapon`:
                 const weapons = actor.system.traits.weaponProf.value;
                 options.forEach(x => weapons.add(x));
-                await actor.update({ 'system.traits.armorProf.value': weapons });
+                await actor.update({ 'system.traits.weaponProf.value': weapons });
                 break;
             case `suite-5e.tool`:
                 const tools = actor.system.tools;
@@ -60,7 +60,7 @@ export class Dialogs {
             case `suite-5e.weapon`:
                 const weapons = actor.system.traits.weaponProf.value;
                 options.forEach(x => weapons.delete(x));
-                await actor.update({ 'system.traits.armorProf.value': weapons });
+                await actor.update({ 'system.traits.weaponProf.value': weapons });
                 break;
             case `suite-5e.tool`:
                 const filteredTools = Object.keys(actor.system.tools).filter(key => !options.includes(key));
