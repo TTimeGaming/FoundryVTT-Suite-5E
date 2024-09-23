@@ -23,6 +23,8 @@ export class Prompts {
         if (actor.getFlag(`suite-5e`, `prompts.concentration`) == undefined) updates[`flags.suite-5e.prompts.concentration`] = [];
         if (actor.getFlag(`suite-5e`, `prompts.attack`) == undefined) updates[`flags.suite-5e.prompts.attack`] = [];
         if (actor.getFlag(`suite-5e`, `prompts.damage`) === undefined) updates[`flags.suite-5e.prompts.damage`] = [];
+        if (actor.getFlag(`suite-5e`, `prompts.initiative`) === undefined) updates[`flags.suite-5e.prompts.initiative`] = [];
+        if (actor.getFlag(`suite-5e`, `prompts.death`) === undefined) updates[`flags.suite-5e.prompts.death`] = [];
         await actor.update(updates);
     }
 
@@ -35,60 +37,69 @@ export class Prompts {
      */
     onRollDialog(hook, actor, title, ...options) {
         this.#_actor = actor;
+        this.#_cachedDialogTitle = title;
 
         switch (hook) {
             case `check`: {
                 const abilityKey = options[0];
-                this.#obtainMessage(actor, title, `prompts.check.all`, `prompts.check.${abilityKey}`);
+                this.#obtainMessage(actor, `prompts.check.all`, `prompts.check.${abilityKey}`);
                 break;
             }
             case `save`: {
                 const abilityKey = options[0];
-                this.#obtainMessage(actor, title, `prompts.save.all`, `prompts.save.${abilityKey}`);
+                this.#obtainMessage(actor, `prompts.save.all`, `prompts.save.${abilityKey}`);
                 break;
             }
             case `concentration`: {
-                this.#obtainMessage(actor, title, `prompts.concentration`);
+                this.#obtainMessage(actor, `prompts.concentration`);
                 break;
             }
             case `skill`: {
                 const skillKey = options[0];
-                this.#obtainMessage(actor, title, `prompts.skill.all`, `prompts.skill.${skillKey}`);
+                this.#obtainMessage(actor, `prompts.skill.all`, `prompts.skill.${skillKey}`);
                 break;
             }
             case `attack`: {
                 const itemType = options[0];
                 const source = [ `consumable`, `container`, `equipment`, `loot`, `tool`, `weapon` ].includes(itemType) ? `inventory` : [ `feat` ].includes(itemType) ? `feature` : [ `spell` ].includes(itemType) ? `spell` : `none`;
-                this.#obtainMessage(actor, title, `prompts.attack.all`, `prompts.attack.${source}`);
+                this.#obtainMessage(actor, `prompts.attack.all`, `prompts.attack.${source}`);
                 break;
             }
             case `damage`: {
                 const itemType = options[0];
                 const source = [ `consumable`, `container`, `equipment`, `loot`, `tool`, `weapon` ].includes(itemType) ? `inventory` : [ `feat` ].includes(itemType) ? `feature` : [ `spell` ].includes(itemType) ? `spell` : `none`;
-                this.#obtainMessage(actor, title, `prompts.damage.all`, `prompts.damage.${source}`);
+                this.#obtainMessage(actor, `prompts.damage.all`, `prompts.damage.${source}`);
                 break;
             }
             case `rest`: {
                 const restType = options[0];
-                this.#obtainMessage(actor, title, `prompts.rest.all`, `prompts.rest.${restType}`);
+                this.#obtainMessage(actor, `prompts.rest.all`, `prompts.rest.${restType}`);
+                break;
             };
+            case `initiative`: {
+                this.#obtainMessage(actor, `prompts.initiative`);
+                break;
+            }
+            case `death`: {
+                this.#obtainMessage(actor, `prompts.death`);
+                break;
+            }
         }
     }
-
     /**
      * 
      * @param {string} title The roll dialog's title
      * @param {JQuery} html The roll dialog's HTML content
      */
     onRenderDialog(title, html) {
-        if (title !== this.#_cachedDialogTitle || this.#_messageToDisplay === ``) {
+        if ((title !== this.#_cachedDialogTitle && !title.includes(this.#_cachedDialogTitle)) || this.#_messageToDisplay === ``) {
             this.#_cachedDialogTitle = ``;
             this.#_messageToDisplay = ``;
             this.#_promptTypes = [];
             this.#_actor = null;
             return;
         }
-
+        
         const rollData = this.#_actor.getRollData();
         
         const originalParts = this.#_messageToDisplay.split(`<br>`);
@@ -165,20 +176,18 @@ export class Prompts {
      * Returns true if a flag is obtained on the actor.
      * 
      * @param {Actor5e} actor The actor performing the roll
-     * @param {string} title The title of the roll dialog
      * @param {string} globalStr The global flag to check on the actor
      * @param {string} localStr The local flag to check on the actor
      * @returns {boolean}
      */
-    #obtainMessage(actor, title, globalStr, localStr = undefined) {
+    #obtainMessage(actor, globalStr, localStr = undefined) {
         this.#_messageToDisplay = ``;
         this.#_promptTypes = [];
-
+        
         if (globalStr !== undefined) {
             this.#_promptTypes.push(`flags.suite-5e.${globalStr}`);
             const globalFlag = actor.getFlag(`suite-5e`, globalStr);
             if (globalFlag !== undefined) {
-                this.#_cachedDialogTitle = title;
                 this.#_messageToDisplay += typeof globalFlag === `string` ? globalFlag : globalFlag.length > 0 ? globalFlag.join(`<br>`) : ``;
             }
         }
@@ -187,7 +196,6 @@ export class Prompts {
             this.#_promptTypes.push(`flags.suite-5e.${localStr}`);
             const localFlag = actor.getFlag(`suite-5e`, localStr);
             if (localFlag !== undefined) {
-                this.#_cachedDialogTitle = title;
                 this.#_messageToDisplay += `${this.#_messageToDisplay !== `` ? `<br>` : ``}${typeof localFlag === `string` ? localFlag : localFlag.length > 0 ? localFlag.join(`<br>`) : ``}`;
             }
         }

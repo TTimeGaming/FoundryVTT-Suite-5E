@@ -39,11 +39,19 @@ Hooks.on(`dnd5e.preRollDamageV2`, function(roll, dialog, message) {
 });
 
 Hooks.on(`dnd5e.preShortRest`, function(actor, rest) {
-    prompts.onRollDialog(`rest`, actor, `Short Rest: ${actor.name}`, rest.type);
+    prompts.onRollDialog(`rest`, actor, `Short Rest`, rest.type);
 });
 
 Hooks.on(`dnd5e.preLongRest`, function(actor, rest) {
-    prompts.onRollDialog(`rest`, actor, `Long Rest: ${actor.name}`, rest.type);
+    prompts.onRollDialog(`rest`, actor, `Long Rest`, rest.type);
+});
+
+Hooks.on(`dnd5e.preRollInitiative`, function(actor, roll) {
+    prompts.onRollDialog(`initiative`, actor, `Initiative`);
+});
+
+Hooks.on(`dnd5e.preRollDeathSave`, function(actor, rollData) {
+    prompts.onRollDialog(`death`, actor, rollData.title);
 });
 
 Hooks.on(`renderDialog`, function(application, html, content) {
