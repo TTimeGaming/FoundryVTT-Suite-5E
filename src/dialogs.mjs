@@ -1,7 +1,7 @@
 export class Dialogs {
     #_requiredParams = [ `flags.suite-5e.dialog.id`, `flags.suite-5e.dialog.options` ];
     #_optionalParams = {
-        'flags.suite-5e.dialog.title': `Custom Dialog`,
+        'flags.suite-5e.dialog.title': `Custom Choice`,
         'flags.suite-5e.dialog.message': ``,
         'flags.suite-5e.dialog.count': 1
     };
@@ -12,7 +12,7 @@ export class Dialogs {
     async onDialogAdd(id, actor, options) {
         switch (id) {
             case `suite-5e.dialog`:
-                ui.notifications.info(`Custom Dialog '${id}' added options: ${options.join(`, `)}`);
+                ui.notifications.info(`Custom Choice '${id}' added options: ${options.join(`, `)}`);
                 break;
             case `suite-5e.armor`:
                 const armors = actor.system.traits.armorProf.value;
@@ -50,7 +50,7 @@ export class Dialogs {
     async onDialogRem(id, actor, options) {
         switch (id) {
             case `suite-5e.dialog`:
-                ui.notifications.info(`Custom Dialog '${id}' removed options: ${options.join(`, `)}`);
+                ui.notifications.info(`Custom Choice '${id}' removed options: ${options.join(`, `)}`);
                 break;
             case `suite-5e.armor`:
                 const armors = actor.system.traits.armorProf.value;
@@ -107,7 +107,7 @@ export class Dialogs {
                         const document = await fromUuid(key);
                         if (document === undefined) continue;
                         
-                        const copies = await item.parent.createEmbeddedDocuments("Item", [ document.toObject() ]);
+                        const copies = await item.parent.createEmbeddedDocuments(`Item`, [ document.toObject() ]);
                         copies.forEach(x => added[label][x.id] = document.id);
                     }
                     
@@ -283,7 +283,7 @@ export class Dialogs {
         }
 
         if (missingParams.length > 0) {
-            if (notifyError) ui.notifications.error(`Unable to create custom dialog, missing keys: ${missingParams.join(`, `)}`);
+            if (notifyError) ui.notifications.error(`Unable to create custom choice, missing keys: ${missingParams.join(`, `)}`);
             return false;
         }
 
@@ -293,8 +293,8 @@ export class Dialogs {
             missingParams.push(param);
         }
 
-        if (missingParams.length > 0) { if (notifyError) ui.notifications.warn(`Assuming default values for custom dialog, missing keys: ${missingParams.join(`, `)}`); }
-        else if (notifySuccess) ui.notifications.info(`Custom dialog created successfully`);
+        if (missingParams.length > 0) { if (notifyError) ui.notifications.warn(`Assuming default values for custom choice, missing keys: ${missingParams.join(`, `)}`); }
+        else if (notifySuccess) ui.notifications.info(`Custom choice created successfully`);
         return true;
     }
 
