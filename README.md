@@ -2,7 +2,7 @@
 
 ![License](https://img.shields.io/github/license/TTimeGaming/FoundryVTT-Suite-5E?label=Software%20License&color=blue)
 ![Foundry](https://img.shields.io/badge/Foundry%20Version-12-purple?logo=foundryvirtualtabletop&logoColor=white)
-![D&D](https://img.shields.io/badge/D%26D%20Version-3.x.x%2B-purple?logo=dungeonsanddragons&logoColor=white)
+![D&D](https://img.shields.io/badge/D%26D%20Version-4.x.x%2B-purple?logo=dungeonsanddragons&logoColor=white)
 ![Software](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FTTimeGaming%2FFoundryVTT-Suite-5E%2Fmaster%2Fmodule.json&label=Latest%20Version&query=$.version&colorB=green)
 
 This is a FoundryVTT module providing an expanded suite of tools to further utilise the official [D&D 5E system](https://foundryvtt.com/packages/dnd5e).
