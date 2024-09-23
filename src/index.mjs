@@ -1,8 +1,10 @@
 import { Prompts } from './prompts.mjs';
 import { Dialogs } from './dialogs.mjs';
+import { Grants } from './grants.mjs';
 
 const prompts = new Prompts();
 const dialogs = new Dialogs();
+const grants = new Grants();
 
 Hooks.once(`init`, function() {
     console.log(`suite-5e | Initializing Suite 5E module!`);
@@ -68,18 +70,25 @@ Hooks.on(`renderActorSheet5e`, async function(app, html, options) {
 
 Hooks.on(`createItem`, function(item, options, userId) {
     dialogs.onItemAdded(item, options);
+    grants.onItemAdded(item, options);
 });
 
 Hooks.on(`deleteItem`, function(item, options, userId) {
     dialogs.onItemRemoved(item, options);
+    grants.onItemRemoved(item, options);
 });
 
 Hooks.on(`dnd5e.getItemContextOptions`, function(item, menu) {
     dialogs.onItemContext(item, menu);
 });
 
+Hooks.on(`dnd5e.getActiveEffectContextOptions`, function(effect, menu) {
+    dialogs.onActiveEffectContext(effect, menu);
+});
+
 Hooks.on(`closeActiveEffectConfig`, function(app, html) {
     dialogs.onActiveEffect(app?.object?.changes ?? []);
+    grants.onActiveEffect(app?.object?.changes ?? []);
 });
 
 Hooks.on(`suite-5e.dialog.add`, async function(id, actor, options) {
@@ -88,6 +97,14 @@ Hooks.on(`suite-5e.dialog.add`, async function(id, actor, options) {
 
 Hooks.on(`suite-5e.dialog.rem`, async function(id, actor, options) {
     dialogs.onDialogRem(id, actor, options);
+});
+
+Hooks.on(`suite-5e.grants.add`, async function(id, actor, items) {
+    grants.onGrantAdd(id, actor, items);
+});
+
+Hooks.on(`suite-5e.grants.rem`, async function(id, actor, items) {
+    grants.onGrantRem(id, actor, items);
 });
 
 $.fn.textWidth = function(text, font) {
