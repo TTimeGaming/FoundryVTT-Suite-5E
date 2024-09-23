@@ -1,0 +1,23 @@
+{
+  "name": "suite-5e",
+  "version": "0.3.4",
+  "description": "A FoundryVTT module providing an expanded suite of tools to further utilise the D&D 5E system.",
+  "scripts": {
+    "db:extract": "node ./src/packs.mjs package extract",
+    "db:compile": "node ./src/packs.mjs package compile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TTimeGaming/FoundryVTT-Suite-5E.git"
+  },
+  "author": "TTimeGaming",
+  "license": "./LICENSE",
+  "bugs": {
+    "url": "https://github.com/TTimeGaming/FoundryVTT-Suite-5E/issues"
+  },
+  "homepage": "https://github.com/TTimeGaming/FoundryVTT-Suite-5E#readme",
+  "dependencies": {
+    "@foundryvtt/foundryvtt-cli": "1.0.3",
+    "yargs": "17.7.2"
+  }
+}

@@ -2,5 +2,9 @@
 .vscode/
 
 # Build Artifacts
-packs/
+node_modules/
+packs/*
+!packs/_source/
+
+FEATURES.md
 wiki/
