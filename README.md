@@ -18,25 +18,28 @@ These prompts allow users to specify prompts in various dialog windows using Act
 
 ![A dialog prompt added to the rest dialog window](./assets/prompt-rest.png "Rest Dialog Prompt")
 
-### Custom Dialogs
+### Custom Choices
 These dialogs can be configured using Active Effect keys to display when an item is added to an actor's sheet and can be used in a variety of ways, but functionality will primarily need to be implemented via a module listening to the `suite-5e` hooks. Implementations are incredibly versatile, but can allow for items to provide an actor with an additional language, skill choice, proficiency with an armor or weapon, etc. The Grants feature allows for additional objects to be provided to the actor based upon the chosen option(s). The chosen option(s) can also be amended using the "Amend Option" context menu item.
 
-![A custom dialog displayed when adding an item to an actor's sheet](./assets/dialog-choice.png "Custom Dialog")
+![A custom choice displayed when adding an item to an actor's sheet](./assets/dialog-choice.png "Custom Choice")
 
 ### Fully-Fledged Wiki
 This module has a fully-fledged [Wiki](https://github.com/TTimeGaming/FoundryVTT-Suite-5E/wiki) providing a full list of all available features and associated Active Effect keys, where necessary, to utilise the suite to its full potential. If you believe anything is missing from the wiki, please raise it on the [Issues](https://github.com/TTimeGaming/FoundryVTT-Suite-5E/issues) page so it can be resolved as quickly as possible.
 
 ### Planned Features
-- Expanded Grants feature to allow choices from defined locations (such as Wizard Cantrip list, Warlock Spell list or Feats)
 - Support for "conditional conditions" (such as Bardic Inspiration die)
 - Expanded Dialogs to include proficiency and expertise, and filter lists to not include already obtained items or only include already obtained items
 - Add an API function to allow other modules to register their own shortcut strings for Custom Dialogs
 
 ## Known Issues
 - **Unable to append a prompt to initiative rolls** (v0.1.0)  
-This issue is caused by the `dnd5e.preRollInitiative` hookEvent being fired **after** the roll dialog has been closed instead of before, as with all other rolls.
+This issue is caused by the `dnd5e.preRollInitiative` hookEvent being fired **after** the roll dialog has been closed instead of before, as with all other rolls.  
+*This has been raised as an issue on the D&D system's page and can be found [here](https://github.com/foundryvtt/dnd5e/issues/4399).*
 - **Unable to remove tool proficiencies applied by Custom Dialog** (v0.2.1)   
 This issue has recently been highlighted and is being looked into.
+- **Unable to pre-populate displayed spell lists in Compendium Browser** (v0.4.0)
+This issue is caused by the `additional` tag of the options supplied to the Compendium Browser is deleted, preventing them from being supplied when the window is being opened.  
+*This has been raised as an issue on the D&D system's page and can be found [here](https://github.com/foundryvtt/dnd5e/issues/4398).*
 
 ---
 This module has been built using HTML5, CSS3 and Javascript.

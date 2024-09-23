@@ -1,6 +1,6 @@
 {
   "name": "suite-5e",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "description": "A FoundryVTT module providing an expanded suite of tools to further utilise the D&D 5E system.",
   "scripts": {
     "db:extract": "node ./src/packs.mjs package extract",
