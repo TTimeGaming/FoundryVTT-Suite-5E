@@ -1,0 +1,118 @@
+{
+  "name": "Skill Proficiencies",
+  "type": "feat",
+  "_id": "ARWhBKdy4v1cw8GE",
+  "img": "systems/dnd5e/icons/svg/items/feature.svg",
+  "system": {
+    "activities": {},
+    "uses": {
+      "spent": 0,
+      "recovery": [],
+      "max": ""
+    },
+    "description": {
+      "value": "<p>This item is an example of how to allow players to choose a skill proficiency using the Suite 5E Custom Dialog.</p><p><strong>Note: </strong>The Active Effect attached to this item has the \"Apply Effect to Actor\" toggle <em><strong>disabled</strong></em>, as should any and all Active Effects utilising Suite 5E's Custom Dialogs, to prevent conflicts with other Custom Dialogs.</p>",
+      "chat": ""
+    },
+    "identifier": "skill-proficiencies",
+    "source": {
+      "revision": 1,
+      "rules": "2024"
+    },
+    "enchant": {},
+    "type": {
+      "value": "",
+      "subtype": ""
+    },
+    "prerequisites": {
+      "level": null
+    },
+    "properties": [],
+    "requirements": ""
+  },
+  "effects": [
+    {
+      "name": "Skill Proficiencies",
+      "img": "icons/svg/aura.svg",
+      "_id": "37uEJd2qBqxtaW3g",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "flags.suite-5e.dialog.id",
+          "mode": 5,
+          "value": "suite-5e.skill",
+          "priority": null
+        },
+        {
+          "key": "flags.suite-5e.dialog.options",
+          "mode": 5,
+          "value": "suite-5e.dialog.skills",
+          "priority": null
+        },
+        {
+          "key": "flags.suite-5e.dialog.title",
+          "mode": 5,
+          "value": "Skill Proficiencies",
+          "priority": null
+        },
+        {
+          "key": "flags.suite-5e.dialog.message",
+          "mode": 5,
+          "value": "Choose one skill proficiency of your choice:",
+          "priority": null
+        },
+        {
+          "key": "flags.suite-5e.dialog.count",
+          "mode": 5,
+          "value": "1",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.0.2",
+        "createdTime": 1727066721134,
+        "modifiedTime": 1727067087679,
+        "lastModifiedBy": "suite5ebuilder00"
+      },
+      "_key": "!items.effects!ARWhBKdy4v1cw8GE.37uEJd2qBqxtaW3g"
+    }
+  ],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "4.0.2",
+    "createdTime": 1727066666744,
+    "modifiedTime": 1727066781459,
+    "lastModifiedBy": "suite5ebuilder00"
+  },
+  "_key": "!items!ARWhBKdy4v1cw8GE"
+}

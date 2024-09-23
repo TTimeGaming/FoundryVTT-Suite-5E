@@ -1,0 +1,21 @@
+{
+  "name": "Placeholders",
+  "sorting": "a",
+  "folder": null,
+  "type": "Item",
+  "_id": "5n1UgJ9YUDnK1xe7",
+  "description": "",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "4.0.2",
+    "createdTime": 1727067916953,
+    "modifiedTime": 1727067916953,
+    "lastModifiedBy": "suite5ebuilder00"
+  },
+  "_key": "!folders!5n1UgJ9YUDnK1xe7"
+}

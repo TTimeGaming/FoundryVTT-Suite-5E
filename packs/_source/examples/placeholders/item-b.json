@@ -1,0 +1,50 @@
+{
+  "folder": "5n1UgJ9YUDnK1xe7",
+  "name": "Item B",
+  "type": "feat",
+  "_id": "67tkysgFyorHpKUu",
+  "img": "systems/dnd5e/icons/svg/items/feature.svg",
+  "system": {
+    "activities": {},
+    "uses": {
+      "spent": 0,
+      "recovery": [],
+      "max": ""
+    },
+    "description": {
+      "value": "",
+      "chat": ""
+    },
+    "identifier": "item-b",
+    "source": {
+      "revision": 1,
+      "rules": "2024"
+    },
+    "enchant": {},
+    "type": {
+      "value": "",
+      "subtype": ""
+    },
+    "prerequisites": {
+      "level": null
+    },
+    "properties": [],
+    "requirements": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "4.0.2",
+    "createdTime": 1727067930239,
+    "modifiedTime": 1727067932023,
+    "lastModifiedBy": "suite5ebuilder00"
+  },
+  "_key": "!items!67tkysgFyorHpKUu"
+}
