@@ -1,7 +1,7 @@
 {
-  "name": "Skill Proficiencies",
+  "name": "Spell Grants",
   "type": "feat",
-  "_id": "ARWhBKdy4v1cw8GE",
+  "_id": "m6VgTqmO7EbCkBKn",
   "img": "systems/dnd5e/icons/svg/items/feature.svg",
   "system": {
     "activities": {},
@@ -11,10 +11,10 @@
       "max": ""
     },
     "description": {
-      "value": "<p>This item is an example of how to allow players to choose a skill proficiency using the Suite 5E Custom Choice.</p><p><strong>Note: </strong>The Active Effect attached to this item has the \"Apply Effect to Actor\" toggle <em><strong>disabled</strong></em>, as should any and all Active Effects utilising Suite 5E's Custom Choices, to prevent conflicts with other Custom Choices.</p>",
+      "value": "<p>This item is an example of how to allow players to choose a spell from the Bard spell list and assigning Intelligence as the spellcasting ability using the Suite 5E Grants.</p><p>Note: The Active Effect attached to this item has the \"Apply Effect to Actor\" toggle disabled, as should any and all Active Effects utilising Suite 5E's Grants, to prevent conflicts with other Grants.</p>",
       "chat": ""
     },
-    "identifier": "skill-proficiencies",
+    "identifier": "spell-grants",
     "source": {
       "revision": 1,
       "rules": "2024"
@@ -32,40 +32,34 @@
   },
   "effects": [
     {
-      "name": "Skill Proficiencies",
+      "name": "Spell Grants",
       "img": "icons/svg/aura.svg",
-      "_id": "37uEJd2qBqxtaW3g",
+      "_id": "cdnHR22tVCfGZthF",
       "type": "base",
       "system": {},
       "changes": [
         {
-          "key": "flags.suite-5e.dialog.id",
+          "key": "flags.suite-5e.grants.id",
           "mode": 5,
-          "value": "suite-5e.skill",
+          "value": "suite-5e.spell",
           "priority": null
         },
         {
-          "key": "flags.suite-5e.dialog.options",
+          "key": "flags.suite-5e.grants.filter",
           "mode": 5,
-          "value": "suite-5e.dialog.skills",
+          "value": "class=bard",
           "priority": null
         },
         {
-          "key": "flags.suite-5e.dialog.title",
-          "mode": 5,
-          "value": "Skill Proficiencies",
-          "priority": null
-        },
-        {
-          "key": "flags.suite-5e.dialog.message",
-          "mode": 5,
-          "value": "Choose one skill proficiency of your choice:",
-          "priority": null
-        },
-        {
-          "key": "flags.suite-5e.dialog.count",
+          "key": "flags.suite-5e.grants.count",
           "mode": 5,
           "value": "1",
+          "priority": null
+        },
+        {
+          "key": "flags.suite-5e.grants.ability",
+          "mode": 5,
+          "value": "int",
           "priority": null
         }
       ],
@@ -82,7 +76,7 @@
       "description": "",
       "origin": null,
       "tint": "#ffffff",
-      "transfer": true,
+      "transfer": false,
       "statuses": [],
       "sort": 0,
       "flags": {},
@@ -92,11 +86,11 @@
         "coreVersion": "12.331",
         "systemId": "dnd5e",
         "systemVersion": "4.0.2",
-        "createdTime": 1727066721134,
-        "modifiedTime": 1727067087679,
+        "createdTime": 1727105241663,
+        "modifiedTime": 1727105292645,
         "lastModifiedBy": "suite5ebuilder00"
       },
-      "_key": "!items.effects!ARWhBKdy4v1cw8GE.37uEJd2qBqxtaW3g"
+      "_key": "!items.effects!m6VgTqmO7EbCkBKn.cdnHR22tVCfGZthF"
     }
   ],
   "folder": null,
@@ -110,9 +104,9 @@
     "coreVersion": "12.331",
     "systemId": "dnd5e",
     "systemVersion": "4.0.2",
-    "createdTime": 1727066666744,
-    "modifiedTime": 1727105200047,
+    "createdTime": 1727105178502,
+    "modifiedTime": 1727105302535,
     "lastModifiedBy": "suite5ebuilder00"
   },
-  "_key": "!items!ARWhBKdy4v1cw8GE"
+  "_key": "!items!m6VgTqmO7EbCkBKn"
 }

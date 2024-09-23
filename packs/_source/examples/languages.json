@@ -1,8 +1,7 @@
 {
-  "folder": null,
-  "name": "Granting Items",
+  "name": "Languages",
   "type": "feat",
-  "_id": "fYkmdJ0kmbf5X8sX",
+  "_id": "mYjqd2bGnpj5p8qY",
   "img": "systems/dnd5e/icons/svg/items/feature.svg",
   "system": {
     "activities": {},
@@ -12,10 +11,10 @@
       "max": ""
     },
     "description": {
-      "value": "<p>This item is an example of how to allow players to grant items using the Suite 5E Custom Dialog.</p><p>Note: The Active Effect attached to this item has the \"Apply Effect to Actor\" toggle disabled, as should any and all Active Effects utilising Suite 5E's Custom Dialogs, to prevent conflicts with other Custom Dialogs.</p>",
+      "value": "<p>This item is an example of how to allow players to choose a language using the Suite 5E Custom Choice.</p><p>Note: The Active Effect attached to this item has the \"Apply Effect to Actor\" toggle disabled, as should any and all Active Effects utilising Suite 5E's Custom Choices, to prevent conflicts with other Custom Choices.</p>",
       "chat": ""
     },
-    "identifier": "granting-items",
+    "identifier": "languages",
     "source": {
       "revision": 1,
       "rules": "2024"
@@ -33,46 +32,40 @@
   },
   "effects": [
     {
-      "name": "Granting Items",
+      "name": "Languages",
       "img": "icons/svg/aura.svg",
-      "_id": "mZA7stAN0mzKtRNo",
+      "_id": "vnh2m7pnBbQ32eVJ",
       "type": "base",
       "system": {},
       "changes": [
         {
           "key": "flags.suite-5e.dialog.id",
           "mode": 5,
-          "value": "granting-items",
+          "value": "suite-5e.language",
           "priority": null
         },
         {
           "key": "flags.suite-5e.dialog.options",
           "mode": 5,
-          "value": "keyA[Item A],keyB[Item B]",
+          "value": "suite-5e.dialog.languages.all",
           "priority": null
         },
         {
           "key": "flags.suite-5e.dialog.title",
           "mode": 5,
-          "value": "Granting Items",
+          "value": "Languages",
           "priority": null
         },
         {
           "key": "flags.suite-5e.dialog.message",
           "mode": 5,
-          "value": "Choose one item from the below list:",
+          "value": "Choose two languages of your choice:",
           "priority": null
         },
         {
           "key": "flags.suite-5e.dialog.count",
           "mode": 5,
-          "value": "1",
-          "priority": null
-        },
-        {
-          "key": "flags.suite-5e.dialog.grants",
-          "mode": 5,
-          "value": "Compendium.suite-5e.examples.Item.BNMklQ2hl8C4QDnc[keyA],Compendium.suite-5e.examples.Item.67tkysgFyorHpKUu[keyB]",
+          "value": "2",
           "priority": null
         }
       ],
@@ -89,7 +82,7 @@
       "description": "",
       "origin": null,
       "tint": "#ffffff",
-      "transfer": true,
+      "transfer": false,
       "statuses": [],
       "sort": 0,
       "flags": {},
@@ -99,14 +92,15 @@
         "coreVersion": "12.331",
         "systemId": "dnd5e",
         "systemVersion": "4.0.2",
-        "createdTime": 1727067967175,
-        "modifiedTime": 1727068280599,
+        "createdTime": 1727105097249,
+        "modifiedTime": 1727105154078,
         "lastModifiedBy": "suite5ebuilder00"
       },
-      "_key": "!items.effects!fYkmdJ0kmbf5X8sX.mZA7stAN0mzKtRNo"
+      "_key": "!items.effects!mYjqd2bGnpj5p8qY.vnh2m7pnBbQ32eVJ"
     }
   ],
-  "sort": 100000,
+  "folder": null,
+  "sort": 0,
   "ownership": {
     "default": 0
   },
@@ -116,9 +110,9 @@
     "coreVersion": "12.331",
     "systemId": "dnd5e",
     "systemVersion": "4.0.2",
-    "createdTime": 1727067940020,
-    "modifiedTime": 1727067963272,
+    "createdTime": 1727105080556,
+    "modifiedTime": 1727105209707,
     "lastModifiedBy": "suite5ebuilder00"
   },
-  "_key": "!items!fYkmdJ0kmbf5X8sX"
+  "_key": "!items!mYjqd2bGnpj5p8qY"
 }

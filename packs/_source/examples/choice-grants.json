@@ -1,7 +1,8 @@
 {
-  "name": "Skill Proficiencies",
+  "folder": null,
+  "name": "Choice Grants",
   "type": "feat",
-  "_id": "ARWhBKdy4v1cw8GE",
+  "_id": "fYkmdJ0kmbf5X8sX",
   "img": "systems/dnd5e/icons/svg/items/feature.svg",
   "system": {
     "activities": {},
@@ -11,10 +12,10 @@
       "max": ""
     },
     "description": {
-      "value": "<p>This item is an example of how to allow players to choose a skill proficiency using the Suite 5E Custom Choice.</p><p><strong>Note: </strong>The Active Effect attached to this item has the \"Apply Effect to Actor\" toggle <em><strong>disabled</strong></em>, as should any and all Active Effects utilising Suite 5E's Custom Choices, to prevent conflicts with other Custom Choices.</p>",
+      "value": "<p>This item is an example of how to allow players to grant items using the Suite 5E Custom Choice.</p><p>Note: The Active Effect attached to this item has the \"Apply Effect to Actor\" toggle disabled, as should any and all Active Effects utilising Suite 5E's Custom Choices, to prevent conflicts with other Custom Choices.</p>",
       "chat": ""
     },
-    "identifier": "skill-proficiencies",
+    "identifier": "granting-items",
     "source": {
       "revision": 1,
       "rules": "2024"
@@ -32,40 +33,46 @@
   },
   "effects": [
     {
-      "name": "Skill Proficiencies",
+      "name": "Granting Items",
       "img": "icons/svg/aura.svg",
-      "_id": "37uEJd2qBqxtaW3g",
+      "_id": "mZA7stAN0mzKtRNo",
       "type": "base",
       "system": {},
       "changes": [
         {
           "key": "flags.suite-5e.dialog.id",
           "mode": 5,
-          "value": "suite-5e.skill",
+          "value": "granting-items",
           "priority": null
         },
         {
           "key": "flags.suite-5e.dialog.options",
           "mode": 5,
-          "value": "suite-5e.dialog.skills",
+          "value": "keyA[Item A],keyB[Item B]",
           "priority": null
         },
         {
           "key": "flags.suite-5e.dialog.title",
           "mode": 5,
-          "value": "Skill Proficiencies",
+          "value": "Granting Items",
           "priority": null
         },
         {
           "key": "flags.suite-5e.dialog.message",
           "mode": 5,
-          "value": "Choose one skill proficiency of your choice:",
+          "value": "Choose one item from the below list:",
           "priority": null
         },
         {
           "key": "flags.suite-5e.dialog.count",
           "mode": 5,
           "value": "1",
+          "priority": null
+        },
+        {
+          "key": "flags.suite-5e.dialog.grants",
+          "mode": 5,
+          "value": "Compendium.suite-5e.examples.Item.BNMklQ2hl8C4QDnc[keyA],Compendium.suite-5e.examples.Item.67tkysgFyorHpKUu[keyB]",
           "priority": null
         }
       ],
@@ -92,15 +99,14 @@
         "coreVersion": "12.331",
         "systemId": "dnd5e",
         "systemVersion": "4.0.2",
-        "createdTime": 1727066721134,
-        "modifiedTime": 1727067087679,
+        "createdTime": 1727067967175,
+        "modifiedTime": 1727068280599,
         "lastModifiedBy": "suite5ebuilder00"
       },
-      "_key": "!items.effects!ARWhBKdy4v1cw8GE.37uEJd2qBqxtaW3g"
+      "_key": "!items.effects!fYkmdJ0kmbf5X8sX.mZA7stAN0mzKtRNo"
     }
   ],
-  "folder": null,
-  "sort": 0,
+  "sort": 100000,
   "ownership": {
     "default": 0
   },
@@ -110,9 +116,9 @@
     "coreVersion": "12.331",
     "systemId": "dnd5e",
     "systemVersion": "4.0.2",
-    "createdTime": 1727066666744,
-    "modifiedTime": 1727105200047,
+    "createdTime": 1727067940020,
+    "modifiedTime": 1727105187950,
     "lastModifiedBy": "suite5ebuilder00"
   },
-  "_key": "!items!ARWhBKdy4v1cw8GE"
+  "_key": "!items!fYkmdJ0kmbf5X8sX"
 }
