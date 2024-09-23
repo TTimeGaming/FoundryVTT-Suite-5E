@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.3.4
+- Fixed bug whereby the Examples Compendium was empty
+- Updated D&D verified version to 4.0.2
+
 ## Version 0.3.3
 - Fixed bug with weapon proficiency dialog storing incorrectly as armor proficiency
 

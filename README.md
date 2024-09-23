@@ -28,8 +28,9 @@ This module has a fully-fledged [Wiki](https://github.com/TTimeGaming/FoundryVTT
 
 ### Planned Features
 - Expanded Grants feature to allow choices from defined locations (such as Wizard Cantrip list, Warlock Spell list or Feats)
-- Additional Conditions to handle certain game states (such as Bardic Inspiration)
-- Expanded Dialogs to include proficiency and expertise, and filter lists to not include already obtained items
+- Support for "conditional conditions" (such as Bardic Inspiration die)
+- Expanded Dialogs to include proficiency and expertise, and filter lists to not include already obtained items or only include already obtained items
+- Add an API function to allow other modules to register their own shortcut strings for Custom Dialogs
 
 ## Known Issues
 - **Unable to append a prompt to initiative rolls** (v0.1.0)  
