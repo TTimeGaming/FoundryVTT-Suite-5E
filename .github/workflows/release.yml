@@ -27,7 +27,7 @@ jobs:
       - name: Build packs
         run: npm run db:compile 
       - name: Generate ZIP
-        run: zip -r module.zip . -x ".git/*" ".github/*" ".gitignore" "assets/" "wiki/" "packs/_source/"
+        run: zip -r module.zip . -x ".git/*" ".github/*" ".gitignore" "node_modules/*" "assets/*" "packs/_source/*" "package.json" "package-lock.json"
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
